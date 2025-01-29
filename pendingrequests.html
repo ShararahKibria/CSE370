@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Connection Requests</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #e0f7fa, #ffecb3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffab40;
+            margin-bottom: 20px;
+            animation: colorChange 3s infinite alternate;
+        }
+
+        @keyframes colorChange {
+            0% { color: #ffab40; }
+            100% { color: #64b5f6; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ffecb3;
+            color: #6d4c41;
+        }
+
+        button {
+            background: #ffecb3;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ffccbc;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .popup.success {
+            border-left: 5px solid #4caf50; /* Green */
+        }
+
+        .popup.reject {
+            border-left: 5px solid #f44336; /* Red */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pending Connection Requests</h1>
+        <div id="connection-list"></div>
+    </div>
+
+    <div class="popup" id="popup">
+        <p id="popup-message"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        function showPopup(message, isSuccess) {
+            const popup = document.getElementById('popup');
+            const messageElement = document.getElementById('popup-message');
+            messageElement.textContent = message;
+            popup.className = 'popup ' + (isSuccess ? 'success' : 'reject');
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function refreshRequests() {
+            fetch('pending_requests.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('connection-list').innerHTML = data;
+                })
+                .catch(error => console.error('Error fetching pending requests:', error));
+        }
+
+        // Event delegation for dynamically created buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.matches('.accept-button') || event.target.matches('.reject-button')) {
+                event.preventDefault();
+                const connectionId = event.target.getAttribute('data-id');
+                const action = event.target.classList.contains('accept-button') ? 'accept' : 'reject';
+
+                fetch('handle_action.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `connection_id=${connectionId}&action=${action}`
+                })
+                .then(response => response.text())
+                .then(data => {
+                    showPopup(data.includes('successfully') ? 'Request processed successfully!' : 'An error occurred.', data.includes('successfully'));
+                    refreshRequests(); // Refresh the requests list without page reload
+                })
+                .catch(error => console.error('Error processing request:', error));
+            }
+        });
+
+        // Initial fetch of pending requests
+        refreshRequests();
+    </script>
+</body>
+</html>
