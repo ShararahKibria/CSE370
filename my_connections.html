@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Connections</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #e0f7fa, #ffecb3);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            animation: colorChange 3s infinite alternate;
+            margin: 0 0 20px;
+        }
+
+        @keyframes colorChange {
+            0% { color: #ffab40; }
+            25% { color: #64b5f6; }
+            50% { color: #ffccbc; }
+            75% { color: #ffecb3; }
+            100% { color: #ffe082; }
+        }
+
+        .connection-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #6d4c41;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 30px #ffccbc, 0 0 60px #ffccbc;
+            color: #4e342e;
+        }
+
+        #pending-requests {
+            color: #ffb74d;
+            transition: color 0.3s ease;
+        }
+
+        #connected-users {
+            color: #64b5f6;
+            transition: color 0.3s ease;
+        }
+
+        #connection-list {
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bokeh {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: url('bokeh.png') repeat;
+            opacity: 0.5;
+            animation: bokehAnimation 20s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes bokehAnimation {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .moving-object {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px #ffccbc;
+            animation: float 10s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bokeh"></div>
+    <div class="container">
+        <h1>My Connections</h1>
+        <div class="connection-buttons">
+            <a href="handleconnection/pendingrequests.html"><button id="pending-requests">Pending Connection Requests</button></a>
+            <a href="handleconnection/connected_users.html"><button id="connected-users">I'm Connected</button></a>
+        </div>
+        <div id="connection-list"></div>
+    </div>
+</body>
+</html>
