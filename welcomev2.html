@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Background Circles */
+        .background-circle {
+            position: absolute;
+            border-radius: 50%;
+            animation: move 10s infinite alternate ease-in-out, colorChange 5s infinite alternate;
+            opacity: 0.7;
+        }
+        .circle-1 {
+            width: 500px;
+            height: 500px;
+            top: -100px;
+            right: -100px;
+        }
+        .circle-2 {
+            width: 600px;
+            height: 600px;
+            bottom: -200px;
+            left: -200px;
+        }
+        /* Adding more circles */
+        .circle-3 {
+            width: 400px;
+            height: 400px;
+            top: 50px;
+            left: 100px;
+            background-color: #ffe6ff;
+            animation-delay: 2s;
+        }
+        .circle-4 {
+            width: 350px;
+            height: 350px;
+            bottom: 50px;
+            right: 100px;
+            background-color: #e6ffe6;
+            animation-delay: 4s;
+        }
+
+        /* Floating animation */
+        @keyframes move {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+        @keyframes colorChange {
+            0% { background-color: #cceeff; }
+            50% { background-color: #ffe6ff; }
+            100% { background-color: #ffcccc; }
+        }
+
+        /* Typewriter effect */
+        .typewriter h1 {
+            overflow: hidden;
+            border-right: .15em solid blue;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: blue; }
+        }
+
+        /* Floating and glowing card effect */
+        .floating-card {
+            animation: float 6s infinite ease-in-out, glow 3s infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 15px rgba(0, 123, 255, 0.4); }
+            100% { box-shadow: 0 0 30px rgba(0, 123, 255, 0.8); }
+        }
+
+        /* Rotating objects in the background */
+        .rotating-object {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #ffebcc;
+            border-radius: 50%;
+            animation: rotate 10s infinite linear, colorChangeRotate 7s infinite alternate;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes colorChangeRotate {
+            0% { background-color: #ffebcc; }
+            100% { background-color: #cceeff; }
+        }
+
+        .rotating-object-1 {
+            top: 30%;
+            left: 10%;
+            animation-delay: 1s;
+        }
+        .rotating-object-2 {
+            top: 70%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        /* Additional interactive background element */
+        .interactive-object {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ffe6e6;
+            border-radius: 50%;
+            top: 10%;
+            right: 20%;
+            animation: bounce 5s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function App() {
+            // Updated explore button function
+            const handleExploreClick = () => {
+                window.location.href = 'user2.html';
+            };
+
+            return (
+                <div className="relative flex items-center justify-center min-h-screen">
+                    {/* Background Elements */}
+                    <div className="background-circle circle-1"></div>
+                    <div className="background-circle circle-2"></div>
+                    <div className="background-circle circle-3"></div>
+                    <div className="background-circle circle-4"></div>
+
+                    {/* Rotating and Interactive Objects */}
+                    <div className="rotating-object rotating-object-1"></div>
+                    <div className="rotating-object rotating-object-2"></div>
+                    <div className="interactive-object"></div>
+
+                    {/* Floating Card */}
+                    <div className="floating-card bg-white shadow-lg rounded-lg overflow-hidden w-80 transition-transform duration-500 hover:scale-105">
+                        {/* Welcome Image */}
+                        <img src="welcomeuser.jpg" alt="Welcome" className="w-full h-48 object-cover" />
+
+                        <div className="bg-blue-100 p-3 text-center">
+                            <div className="typewriter">
+                                <h1 className="text-2xl font-bold text-blue-500 mb-2" style={{ fontFamily: 'Pacifico, cursive' }}>Welcome Enthusiast!</h1>
+                            </div>
+                            <p className="text-blue-500 mb-4">Hope you will have a pleasant journey with us!!</p>
+                            <div className="flex justify-center mb-4">
+                                <div className="border-t-2 border-blue-500 w-8 mx-1"></div>
+                                <div className="border-t-2 border-blue-500 w-8 mx-1"></div>
+                                <div className="border-t-2 border-blue-500 w-8 mx-1"></div>
+                                <div className="border-t-2 border-blue-500 w-8 mx-1"></div>
+                            </div>
+                            <button onClick={handleExploreClick} className="bg-blue-300 text-white py-2 px-4 rounded transition-transform duration-300 hover:scale-110 hover:bg-blue-500">
+                                Let’s Explore!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

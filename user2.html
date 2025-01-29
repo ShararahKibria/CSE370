@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile - Book Lovers</title>
+  <style>
+    /* Body and Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f9c5d1, #9796f0, #fbc2eb);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+      overflow: hidden;
+    }
+
+    /* Bokeh effect background */
+    .bokeh {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 90%);
+      animation: bokehMove 20s infinite;
+      pointer-events: none;
+    }
+
+    /* Bokeh Animation */
+    @keyframes bokehMove {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-50px, -50px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Container */
+    .profile-card {
+      position: relative;
+      width: 400px; /* Adjusted width */
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      animation: fadeIn 1.5s ease-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Fade In Animation for the Profile Card */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hover Animation for the Profile Card */
+    .profile-card:hover {
+      animation: cardHover 0.6s forwards;
+    }
+
+    @keyframes cardHover {
+      0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+      50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); }
+      100% { transform: scale(1.03); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35); }
+    }
+
+    /* Profile Header */
+    .profile-header {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .profile-header h1 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #6c5ce7;
+    }
+
+    .profile-header h2 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    /* User Information */
+    .info {
+      margin-top: 10px;
+      color: #333;
+      font-size: 1.1em;
+    }
+
+    .info span {
+      font-weight: bold;
+      color: #6c5ce7;
+    }
+
+    /* Color Changing Text Effect */
+    .highlight {
+      font-weight: bold;
+      animation: colorChange 5s infinite alternate;
+    }
+
+    @keyframes colorChange {
+      0% { color: #ff9ff3; }
+      50% { color: #feca57; }
+      100% { color: #54a0ff; }
+    }
+
+    /* Button Style */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap; /* Allow buttons to wrap */
+    }
+
+    .btn {
+      background-color: #6c5ce7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 0 0 10px rgba(151, 150, 240, 0.5), 0 0 20px rgba(151, 150, 240, 0.8);
+      animation: glowButton 3s infinite alternate;
+    }
+
+    /* Button Glow Animation */
+    @keyframes glowButton {
+      0% {
+        box-shadow: 0 0 15px rgba(255, 205, 210, 0.8), 0 0 30px rgba(151, 150, 240, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 20px rgba(255, 182, 193, 1), 0 0 60px rgba(151, 150, 240, 1);
+      }
+    }
+
+    .btn:hover {
+      background-color: #ff9ff3;
+      transform: scale(1.05);
+    }
+
+    /* Logout Button Style */
+    .logout-btn {
+      background-color: #ff6b6b;
+      margin-top: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 500px) {
+      .profile-card {
+        width: 90%;
+      }
+      .btn-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bokeh effect layer -->
+  <div class="bokeh"></div>
+
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <h1 id="userName">Loading...</h1>
+      <h2 id="userUsername">@loading...</h2>
+    </div>
+
+    <!-- User Information -->
+    <div class="info">
+      <p><span>Favorite Genre:</span> <span class="highlight" id="userGenre">Loading...</span></p>
+      <p><span>Favorite Book:</span> <span class="highlight" id="userBook">Loading...</span></p>
+      <p><span>Email:</span> <span class="highlight" id="userEmail">Loading...</span></p>
+    </div>
+
+    <!-- Button Group -->
+    <div class="btn-group">
+      <a href="search.html"><button class="btn">Connections</button></a>
+      <button class="btn">Message</button>
+      <button class="btn">Post</button>
+      <a href="my_connections.html"><button class="btn">My Connections</button></a> <!-- New Button -->
+    </div>
+
+    <!-- Logout Button -->
+    <a href="login.html"><button class="btn logout-btn">Logout</button></a>
+  </div>
+
+  <script>
+    // Function to fetch user data
+    async function fetchUserData(userId) {
+      try {
+        const response = await fetch(`getUserData.php?user_id=${userId}`);
+        const data = await response.json();
+
+        // Check for errors
+        if (data.error) {
+          console.error('Error fetching user data:', data.error);
+          return;
+        }
+
+        // Update the profile with fetched data
+        document.getElementById('userName').textContent = data.name;
+        document.getElementById('userUsername').textContent = 'Username: ' + data.username;
+        document.getElementById('userGenre').textContent = data.genre;
+        document.getElementById('userBook').textContent = data.books;
+        document.getElementById('userEmail').textContent = data.email;
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+
+    // Get the user ID from the query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id');
+
+    // Fetch user data if user ID is present
+    if (userId) {
+      fetchUserData(userId);
+    } else {
+      console.error('User ID is missing');
+    }
+  </script>
+
+</body>
+</html>
